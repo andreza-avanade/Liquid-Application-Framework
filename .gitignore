@@ -274,4 +274,4 @@ __pycache__/
 
 # LaunchSettings
 /samples/Liquid.Sample.CarRegistry/Properties/launchSettings.json
-/samples/Liquid.Sample.CarRegistry/appsettings.json/appsettings.Development.json
+/samples/Liquid.Sample.CarRegistry/appsettings.Development.json
