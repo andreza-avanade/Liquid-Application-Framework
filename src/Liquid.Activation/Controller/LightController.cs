@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using System.Reflection;
 using System.Text.Encodings.Web;
 using System.Text.RegularExpressions;
@@ -15,6 +17,7 @@ namespace Liquid.Activation
      /// This Controller and its action method handles incoming browser requests, 
      /// retrieves necessary model data and returns appropriate responses.
      /// </summary>
+    [ExcludeFromCodeCoverage]
     public abstract class LightController : Controller
     {
         protected LightContext _context;
@@ -80,8 +83,11 @@ namespace Liquid.Activation
             }
             
 			if (response.BadRequestMessage) return BadRequest(response);
-            
-            if(response.GenericReturnMessage) return StatusCode((int)response.StatusCode, response);
+
+            if (response.StatusCode.Equals((int)HttpStatusCode.NoContent))
+                return StatusCode((int)response?.StatusCode);
+
+            if (response.GenericReturnMessage) return StatusCode((int)response.StatusCode, response);
 			
             return Ok(response);            
         }
